@@ -95,5 +95,16 @@ testing.describe("end to end", function() {
             });
         });
     });
+    testing.describe("marking done", function() {
+        testing.it("should mark an item done", function() {
+            helpers.navigateToSite();
+            helpers.addTodo("Hello!");
+            helpers.markDone(0);
+            helpers.navigateToSite();
+            helpers.getTodoDone().then(function(elements) {
+                assert.equal(elements.length, 1);
+            });
+        });
+    });
 });
 

@@ -18,6 +18,7 @@ module.exports = function(port, middleware, callback) {
     app.post("/api/todo", function(req, res) {
         var todo = req.body;
         todo.id = latestId.toString();
+        todo.isCompleted = false;
         latestId++;
         todos.push(todo);
         res.set("Location", "/api/todo/" + todo.id);
@@ -27,20 +28,24 @@ module.exports = function(port, middleware, callback) {
     // Update
     app.put("/api/todo", function(req, res) {
         var update = req.body;
-
-        if (update && update.title) {
+        if (update && (typeof update.title !== "undefined" ||
+            typeof update.isCompleted !== "undefined")) {
             var id = update.id;
             var todoItem = getTodo(id);
 
             if (todoItem) {
-                todoItem.title = update.title;
+                todoItem.title = update.title || todoItem.title;
+                todoItem.isCompleted = update.isCompleted || todoItem.isCompleted;
                 res.sendStatus(200);
             } else {
+                // Force an update of the ID to avoid collisions
+                update.id = latestId;
+                latestId++;
+                update.isCompleted = update.isCompleted || false;
                 todos.push(update);
                 res.sendStatus(201);
             }
         } else {
-            console.log("Sending 404");
             res.sendStatus(404);
         }
     });

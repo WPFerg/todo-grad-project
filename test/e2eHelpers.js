@@ -74,13 +74,22 @@ module.exports.getTodoList = function() {
     return driver.findElements(webdriver.By.css("#todo-list li"));
 };
 
+module.exports.getTodoDone = function() {
+    return driver.findElements(webdriver.By.css(".todo-done"));
+};
+
 module.exports.addTodo = function(text) {
     driver.findElement(webdriver.By.id("new-todo")).sendKeys(text);
     driver.findElement(webdriver.By.id("submit-todo")).click();
 };
 
 module.exports.deleteTodo = function(id) {
-    driver.findElement(webdriver.By.css("#todo-list li button[data-id='" + id + "']"))
+    driver.findElement(webdriver.By.css(".delete-button[data-id='" + id + "']"))
+        .click();
+};
+
+module.exports.markDone = function(id) {
+    driver.findElement(webdriver.By.css(".mark-done-button[data-id='" + id + "']"))
         .click();
 };
 

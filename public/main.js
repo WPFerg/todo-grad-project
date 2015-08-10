@@ -60,6 +60,29 @@ function deleteToDo(event) {
     }
 }
 
+function markDone(event) {
+    if (event && event.target) {
+        var id = event.target.getAttribute("data-id");
+        if (id) {
+            var createRequest = new XMLHttpRequest();
+            createRequest.open("PUT", "/api/todo/");
+            createRequest.setRequestHeader("Content-type", "application/json");
+            createRequest.onload = function () {
+                if (this.status === 200) {
+                    reloadTodoList();
+                } else {
+                    error.textContent = "Failed to mark done. " +
+                        "Server returned " + this.status + " - " + this.responseText;
+                }
+            };
+            createRequest.send(JSON.stringify({
+                isCompleted: true,
+                "id": id
+            }));
+        }
+    }
+}
+
 function reloadTodoList() {
     while (todoList.firstChild) {
         todoList.removeChild(todoList.firstChild);
@@ -70,13 +93,27 @@ function reloadTodoList() {
         todos.forEach(function(todo) {
             var listItem = document.createElement("li");
             listItem.textContent = todo.title;
+            if (todo.isCompleted) {
+                listItem.className = "todo-done";
+            }
 
-            var listButton = document.createElement("button");
-            listButton.textContent = "Delete";
-            listButton.setAttribute("data-id", todo.id);
-            listButton.onclick = deleteToDo;
+            var deleteButton = document.createElement("button");
+            deleteButton.className = "delete-button";
+            deleteButton.textContent = "Delete";
+            deleteButton.setAttribute("data-id", todo.id);
+            deleteButton.onclick = deleteToDo;
 
-            listItem.appendChild(listButton);
+            if (!todo.isCompleted) {
+                var markDoneButton = document.createElement("button");
+                markDoneButton.className = "mark-done-button";
+                markDoneButton.textContent = "Mark Done";
+                markDoneButton.setAttribute("data-id", todo.id);
+                markDoneButton.onclick = markDone;
+
+                listItem.appendChild(markDoneButton);
+            }
+
+            listItem.appendChild(deleteButton);
             todoList.appendChild(listItem);
         });
     });

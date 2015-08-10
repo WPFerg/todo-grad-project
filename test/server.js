@@ -67,7 +67,8 @@ describe("server", function() {
                 request.get(todoListUrl, function(error, response, body) {
                     assert.deepEqual(JSON.parse(body), [{
                         title: "This is a TODO item",
-                        id: "0"
+                        id: "0",
+                        isCompleted: false
                     }]);
                     done();
                 });
@@ -123,7 +124,7 @@ describe("server", function() {
             });
         });
 
-        it("should edit a todo if it exists", function(done) {
+        it("should edit a todo's title if it exists", function(done) {
             request.put({
                 url: todoListUrl,
                 json: {
@@ -134,7 +135,47 @@ describe("server", function() {
                 request.get(todoListUrl, function(error, response, body) {
                     assert.deepEqual(JSON.parse(body)[0], {
                         id: "0",
-                        title: "This is another todo item"
+                        title: "This is another todo item",
+                        isCompleted: false
+                    });
+                    done();
+                });
+            });
+        });
+
+        it("should edit a todo's isCompleted if it exists", function(done) {
+            request.put({
+                url: todoListUrl,
+                json: {
+                    id: "0",
+                    isCompleted: true
+                }
+            }, function() {
+                request.get(todoListUrl, function(error, response, body) {
+                    assert.deepEqual(JSON.parse(body)[0], {
+                        id: "0",
+                        title: "This is a TODO item",
+                        isCompleted: true
+                    });
+                    done();
+                });
+            });
+        });
+
+        it("should edit a todo's isCompleted & title if it exists", function(done) {
+            request.put({
+                url: todoListUrl,
+                json: {
+                    id: "0",
+                    title: "This is an update",
+                    isCompleted: true
+                }
+            }, function() {
+                request.get(todoListUrl, function(error, response, body) {
+                    assert.deepEqual(JSON.parse(body)[0], {
+                        id: "0",
+                        title: "This is an update",
+                        isCompleted: true
                     });
                     done();
                 });
