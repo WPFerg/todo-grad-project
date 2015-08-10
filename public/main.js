@@ -42,6 +42,24 @@ function getTodoList(callback) {
     createRequest.send();
 }
 
+function deleteToDo(event) {
+    if (event && event.target) {
+        var id = event.target.getAttribute("data-id");
+        if (id) {
+            var createRequest = new XMLHttpRequest();
+            createRequest.open("DELETE", "/api/todo/" + id);
+            createRequest.onload = function () {
+                if (this.status === 200) {
+                    reloadTodoList();
+                } else {
+                    error.textContent = "Failed to delete. Server returned " + this.status + " - " + this.responseText;
+                }
+            };
+            createRequest.send();
+        }
+    }
+}
+
 function reloadTodoList() {
     while (todoList.firstChild) {
         todoList.removeChild(todoList.firstChild);
@@ -52,6 +70,13 @@ function reloadTodoList() {
         todos.forEach(function(todo) {
             var listItem = document.createElement("li");
             listItem.textContent = todo.title;
+
+            var listButton = document.createElement("button");
+            listButton.textContent = "Delete";
+            listButton.setAttribute("data-id", todo.id);
+            listButton.onclick = deleteToDo;
+
+            listItem.appendChild(listButton);
             todoList.appendChild(listItem);
         });
     });

@@ -1,3 +1,4 @@
 node_modules/
 test_output/
 build_artifacts/
+.idea/

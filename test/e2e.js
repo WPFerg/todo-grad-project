@@ -34,34 +34,64 @@ testing.describe("end to end", function() {
         });
     });
     testing.describe("on create todo item", function() {
-        testing.it("clears the input field", function() {
+        testing.it("clears the input field", function () {
             helpers.navigateToSite();
             helpers.addTodo("New todo item");
-            helpers.getInputText().then(function(value) {
+            helpers.getInputText().then(function (value) {
                 assert.equal(value, "");
             });
         });
-        testing.it("adds the todo item to the list", function() {
+        testing.it("adds the todo item to the list", function () {
             helpers.navigateToSite();
             helpers.addTodo("New todo item");
+            helpers.getTodoList().then(function (elements) {
+                assert.equal(elements.length, 1);
+            });
+        });
+        testing.it("displays an error if the request fails", function () {
+            helpers.setupErrorRoute("post", "/api/todo");
+            helpers.navigateToSite();
+            helpers.addTodo("New todo item");
+            helpers.getErrorText().then(function (text) {
+                assert.equal(text, "Failed to create item. Server returned 500 - Internal Server Error");
+            });
+        });
+        testing.it("can be done multiple times", function () {
+            helpers.navigateToSite();
+            helpers.addTodo("New todo item");
+            helpers.addTodo("Another new todo item");
+            helpers.getTodoList().then(function (elements) {
+                assert.equal(elements.length, 2);
+            });
+        });
+    });
+    testing.describe("on delete todo item", function() {
+        testing.it("can delete items from the server", function() {
+            helpers.navigateToSite();
+            helpers.addTodo("Hello!");
+            helpers.navigateToSite();
+            helpers.deleteTodo(0);
+            helpers.getTodoList().then(function(elements) {
+                assert.equal(elements.length, 0);
+            });
+        });
+        testing.it("can delete multiple items", function() {
+            helpers.navigateToSite();
+            helpers.addTodo("Hello!");
+            helpers.addTodo("Hello again!");
+            helpers.deleteTodo(0);
             helpers.getTodoList().then(function(elements) {
                 assert.equal(elements.length, 1);
             });
         });
-        testing.it("displays an error if the request fails", function() {
-            helpers.setupErrorRoute("post", "/api/todo");
+        testing.it("should display an error message if deletion fails", function() {
+            helpers.setupErrorRoute("delete", "/api/todo/0");
             helpers.navigateToSite();
-            helpers.addTodo("New todo item");
-            helpers.getErrorText().then(function(text) {
-                assert.equal(text, "Failed to create item. Server returned 500 - Internal Server Error");
-            });
-        });
-        testing.it("can be done multiple times", function() {
-            helpers.navigateToSite();
-            helpers.addTodo("New todo item");
-            helpers.addTodo("Another new todo item");
-            helpers.getTodoList().then(function(elements) {
-                assert.equal(elements.length, 2);
+            helpers.addTodo("Hello!");
+            helpers.deleteTodo(0);
+
+            helpers.getErrorText().then(function (text) {
+                assert.equal(text, "Failed to delete. Server returned 500 - Internal Server Error");
             });
         });
     });
