@@ -24,6 +24,27 @@ module.exports = function(port, middleware, callback) {
         res.sendStatus(201);
     });
 
+    // Update
+    app.put("/api/todo", function(req, res) {
+        var update = req.body;
+
+        if (update && update.title) {
+            var id = update.id;
+            var todoItem = getTodo(id);
+
+            if (todoItem) {
+                todoItem.title = update.title;
+                res.sendStatus(200);
+            } else {
+                todos.push(update);
+                res.sendStatus(201);
+            }
+        } else {
+            console.log("Sending 404");
+            res.sendStatus(404);
+        }
+    });
+
     // Read
     app.get("/api/todo", function(req, res) {
         res.json(todos);

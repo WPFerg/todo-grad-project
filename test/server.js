@@ -110,4 +110,59 @@ describe("server", function() {
             });
         });
     });
+    describe("update todos", function() {
+
+        beforeEach(function(done) {
+            request.post({
+                url: todoListUrl,
+                json: {
+                    title: "This is a TODO item"
+                }
+            }, function() {
+                done();
+            });
+        });
+
+        it("should edit a todo if it exists", function(done) {
+            request.put({
+                url: todoListUrl,
+                json: {
+                    id: "0",
+                    title: "This is another todo item"
+                }
+            }, function() {
+                request.get(todoListUrl, function(error, response, body) {
+                    assert.deepEqual(JSON.parse(body)[0], {
+                        id: "0",
+                        title: "This is another todo item"
+                    });
+                    done();
+                });
+            });
+        });
+
+        it("should create a todo if it doesn't already exist", function(done) {
+            request.put({
+                url: todoListUrl,
+                json: {
+                    title: "This is another todo item"
+                }
+            }, function() {
+                request.get(todoListUrl, function(error, response, body) {
+                    assert.equal(JSON.parse(body).length, 2);
+                    done();
+                });
+            });
+        });
+
+        it("should fail if there's no body in the request", function(done) {
+            request.put({
+                url: todoListUrl,
+                json: {}
+            }, function(error, response) {
+                assert.equal(response.statusCode, 404);
+                done();
+            });
+        });
+    });
 });
