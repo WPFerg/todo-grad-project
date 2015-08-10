@@ -68,6 +68,12 @@ module.exports.getErrorText = function() {
     return errorElement.getText();
 };
 
+module.exports.getCountText = function() {
+    var countElement = driver.findElement(webdriver.By.id("count-label"));
+    driver.wait(webdriver.until.elementTextContains(countElement, "There"), 5000);
+    return countElement.getText();
+};
+
 module.exports.getTodoList = function() {
     var todoListPlaceholder = driver.findElement(webdriver.By.id("todo-list-placeholder"));
     driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);

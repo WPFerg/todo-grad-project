@@ -106,5 +106,30 @@ testing.describe("end to end", function() {
             });
         });
     });
+    testing.describe("left to do text", function() {
+        testing.it("should display 0 things left to do initially", function() {
+            helpers.navigateToSite();
+            helpers.getCountText().then(function(text) {
+                assert.equal(text, "There are 0 things left to do");
+            });
+        });
+
+        testing.it("should display the number of items left to do", function() {
+            helpers.navigateToSite();
+            helpers.addTodo("Hello!");
+            helpers.getCountText().then(function(text) {
+                assert.equal(text, "There is 1 thing left to do");
+            });
+        });
+
+        testing.it("should exclude the number of items done", function() {
+            helpers.navigateToSite();
+            helpers.addTodo("Hello!");
+            helpers.markDone(0);
+            helpers.getCountText().then(function(text) {
+                assert.equal(text, "There are 0 things left to do");
+            });
+        });
+    });
 });
 

@@ -3,6 +3,7 @@ var todoListPlaceholder = document.getElementById("todo-list-placeholder");
 var form = document.getElementById("todo-form");
 var todoTitle = document.getElementById("new-todo");
 var error = document.getElementById("error");
+var leftToDo = document.getElementById("count-label");
 
 form.onsubmit = function(event) {
     var title = todoTitle.value;
@@ -90,6 +91,7 @@ function reloadTodoList() {
     todoListPlaceholder.style.display = "block";
     getTodoList(function(todos) {
         todoListPlaceholder.style.display = "none";
+        var itemsLeftToDo = 0;
         todos.forEach(function(todo) {
             var listItem = document.createElement("li");
             listItem.textContent = todo.title;
@@ -111,11 +113,18 @@ function reloadTodoList() {
                 markDoneButton.onclick = markDone;
 
                 listItem.appendChild(markDoneButton);
+                itemsLeftToDo++;
             }
 
             listItem.appendChild(deleteButton);
             todoList.appendChild(listItem);
         });
+
+        leftToDo.textContent = "There " +
+            (itemsLeftToDo === 1 ? "is" : "are") +
+            " " + itemsLeftToDo + " thing" +
+            (itemsLeftToDo === 1 ? "" : "s") +
+            " left to do";
     });
 }
 
