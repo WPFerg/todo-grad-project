@@ -155,7 +155,49 @@ testing.describe("end to end", function() {
                 assert.equal(elements.length, 2);
             });
         });
+    });
+    testing.describe("filtering", function() {
+        beforeEach(function() {
+            helpers.navigateToSite();
+            helpers.addTodo("Hello1");
+            helpers.addTodo("Hide");
+            helpers.addTodo("Yes");
+            helpers.markDone(1);
+        });
 
+        testing.it("should hide inactive todos", function() {
+            helpers.setFilter("active");
+            helpers.getTodoList().then(function (elements) {
+                assert.equal(elements.length, 2);
+            });
+        });
+
+        testing.it("should show done todos", function() {
+            helpers.setFilter("complete");
+            helpers.getTodoList().then(function (elements) {
+                assert.equal(elements.length, 1);
+            });
+        });
+
+        testing.it("should work after different button clicks", function() {
+            helpers.setFilter("active");
+            helpers.getTodoList().then(function (elements) {
+                assert.equal(elements.length, 2);
+            });
+            helpers.setFilter("complete");
+            helpers.getTodoList().then(function (elements) {
+                assert.equal(elements.length, 1);
+            });
+            helpers.setFilter("all");
+            helpers.getTodoList().then(function (elements) {
+                assert.equal(elements.length, 3);
+            });
+            helpers.clearAllDone();
+            helpers.setFilter("complete");
+            helpers.getTodoList().then(function (elements) {
+                assert.equal(elements.length, 0);
+            });
+        });
     });
 });
 

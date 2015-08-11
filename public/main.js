@@ -4,7 +4,10 @@ var form = document.getElementById("todo-form");
 var todoTitle = document.getElementById("new-todo");
 var error = document.getElementById("error");
 var leftToDo = document.getElementById("count-label");
-var markDoneBox = document.getElementById("mark-done-box");
+var viewAllButton = document.getElementById("view-all-button");
+var viewActiveButton = document.getElementById("view-active-button");
+var viewCompleteButton = document.getElementById("view-complete-button");
+var deleteAllDoneButton = document.getElementById("delete-all-done-button");
 
 form.onsubmit = function(event) {
     var title = todoTitle.value;
@@ -14,6 +17,10 @@ form.onsubmit = function(event) {
     todoTitle.value = "";
     event.preventDefault();
 };
+
+viewAllButton.onclick = setFilters();
+viewActiveButton.onclick = setFilters({isCompleted: false});
+viewCompleteButton.onclick = setFilters({isCompleted: true});
 
 function createTodo(title, callback) {
     var createRequest = new XMLHttpRequest();
@@ -102,46 +109,63 @@ function clearDone(data) {
     };
 }
 
-function reloadTodoList() {
+function reloadTodoList(filters) {
     while (todoList.firstChild) {
         todoList.removeChild(todoList.firstChild);
     }
-    if (markDoneBox.firstChild) {
-        markDoneBox.removeChild(markDoneBox.firstChild);
-    }
+    deleteAllDoneButton.style.display = "none";
     todoListPlaceholder.style.display = "block";
     getTodoList(function(todos) {
         todoListPlaceholder.style.display = "none";
         var itemsLeftToDo = 0;
         var itemsDone = 0;
+
         todos.forEach(function(todo) {
-            var listItem = document.createElement("li");
-            listItem.textContent = todo.title;
-            if (todo.isCompleted) {
-                listItem.className = "todo-done";
+            var displayItem = true;
+            var listItem;
+            var deleteButton;
+            if (filters) {
+                var keys = Object.keys(filters);
+                keys.forEach(function(key) {
+                    if (filters[key] !== todo[key]) {
+                        displayItem = false;
+                    }
+                });
             }
 
-            var deleteButton = document.createElement("button");
-            deleteButton.className = "delete-button";
-            deleteButton.textContent = "Delete";
-            deleteButton.setAttribute("data-id", todo.id);
-            deleteButton.onclick = deleteToDoEvent;
+            if (displayItem) {
+                listItem = document.createElement("li");
+                listItem.textContent = todo.title;
+                if (todo.isCompleted) {
+                    listItem.className = "todo-done";
+                }
+
+                deleteButton = document.createElement("button");
+                deleteButton.className = "delete-button";
+                deleteButton.textContent = "Delete";
+                deleteButton.setAttribute("data-id", todo.id);
+                deleteButton.onclick = deleteToDoEvent;
+            }
 
             if (!todo.isCompleted) {
-                var markDoneButton = document.createElement("button");
-                markDoneButton.className = "mark-done-button";
-                markDoneButton.textContent = "Mark Done";
-                markDoneButton.setAttribute("data-id", todo.id);
-                markDoneButton.onclick = markDone;
+                if (displayItem) {
+                    var markDoneButton = document.createElement("button");
+                    markDoneButton.className = "mark-done-button";
+                    markDoneButton.textContent = "Mark Done";
+                    markDoneButton.setAttribute("data-id", todo.id);
+                    markDoneButton.onclick = markDone;
 
-                listItem.appendChild(markDoneButton);
+                    listItem.appendChild(markDoneButton);
+                }
                 itemsLeftToDo++;
             } else {
                 itemsDone++;
             }
 
-            listItem.appendChild(deleteButton);
-            todoList.appendChild(listItem);
+            if (displayItem) {
+                listItem.appendChild(deleteButton);
+                todoList.appendChild(listItem);
+            }
         });
 
         leftToDo.textContent = "There " +
@@ -151,14 +175,16 @@ function reloadTodoList() {
             " left to do";
 
         if (itemsDone > 0) {
-            var clearAllButton = document.createElement("button");
-            clearAllButton.className = "delete-all-done-button";
-            clearAllButton.textContent = "Delete All Done";
-            clearAllButton.onclick = clearDone(todos);
-
-            markDoneBox.appendChild(clearAllButton);
+            deleteAllDoneButton.onclick = clearDone(todos);
+            deleteAllDoneButton.style.display = "inline-block";
         }
     });
+}
+
+function setFilters(filters) {
+    return function() {
+        reloadTodoList(filters);
+    };
 }
 
 reloadTodoList();

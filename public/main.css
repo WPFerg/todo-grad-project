@@ -28,3 +28,24 @@ h1 {
     text-decoration: line-through;
     color: #999;
 }
+
+#todo-list li {
+    height: 2.2em;
+}
+
+button, input[type="submit"] {
+    transition: all 0.3s;
+    background-color: #E822CB;
+    color: #FFCDE9;
+    border-radius: 3px;
+    height: 30px;
+    border: 1px solid #AD0AE8;
+    padding: 3px 10px;
+    margin: 0 5px;
+    box-shadow: 0 0 5px #8009DB;
+}
+
+button:hover, input[type="submit"]:hover {
+    box-shadow: 0 0 15px #8009DB;
+    background-color: #AD0AE8;
+}

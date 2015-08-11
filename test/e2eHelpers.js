@@ -109,7 +109,12 @@ module.exports.markDone = function(id) {
 
 module.exports.clearAllDone = function() {
     this.waitForListLoad();
-    driver.findElement(webdriver.By.css(".delete-all-done-button")).click();
+    driver.findElement(webdriver.By.css("#delete-all-done-button")).click();
+};
+
+module.exports.setFilter = function(filter) {
+    this.waitForListLoad();
+    driver.findElement(webdriver.By.css("#view-" + filter + "-button")).click();
 };
 
 module.exports.setupErrorRoute = function(action, route) {
