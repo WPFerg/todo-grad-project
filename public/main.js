@@ -24,7 +24,7 @@ viewActiveButton.onclick = setFilters({isCompleted: false});
 viewCompleteButton.onclick = setFilters({isCompleted: true});
 
 viewSpinnerButton.onclick = function() {
-    if(todoListPlaceholder.getAttribute("data-override") !== "true") {
+    if (todoListPlaceholder.getAttribute("data-override") !== "true") {
         todoListPlaceholder.style.display = "block";
         todoListPlaceholder.setAttribute("data-override", "true");
         viewSpinnerButton.innerHTML = "Hide OneDiv&trade; Spinner";
@@ -134,7 +134,7 @@ function reloadTodoList(filters, callback) {
     deleteAllDoneButton.style.display = "none";
     todoListPlaceholder.style.display = "block";
     getTodoList(function(todos) {
-        if(todoListPlaceholder.getAttribute("data-override") !== "true") {
+        if (todoListPlaceholder.getAttribute("data-override") !== "true") {
             todoListPlaceholder.style.display = "none";
         }
         var itemsLeftToDo = 0;
