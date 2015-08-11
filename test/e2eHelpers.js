@@ -77,7 +77,7 @@ module.exports.getCountText = function() {
 module.exports.getTodoList = function() {
     var todoListPlaceholder = driver.findElement(webdriver.By.id("todo-list-placeholder"));
     driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
-    return driver.findElements(webdriver.By.css("#todo-list li"));
+    return driver.findElements(webdriver.By.css(".todo-item, .todo-done"));
 };
 
 module.exports.waitForListLoad = function() {
