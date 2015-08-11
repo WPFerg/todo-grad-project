@@ -80,7 +80,13 @@ module.exports.getTodoList = function() {
     return driver.findElements(webdriver.By.css("#todo-list li"));
 };
 
+module.exports.waitForListLoad = function() {
+    var todoListPlaceholder = driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
+};
+
 module.exports.getTodoDone = function() {
+    this.waitForListLoad();
     return driver.findElements(webdriver.By.css(".todo-done"));
 };
 
@@ -90,13 +96,20 @@ module.exports.addTodo = function(text) {
 };
 
 module.exports.deleteTodo = function(id) {
+    this.waitForListLoad();
     driver.findElement(webdriver.By.css(".delete-button[data-id='" + id + "']"))
         .click();
 };
 
 module.exports.markDone = function(id) {
+    this.waitForListLoad();
     driver.findElement(webdriver.By.css(".mark-done-button[data-id='" + id + "']"))
         .click();
+};
+
+module.exports.clearAllDone = function() {
+    this.waitForListLoad();
+    driver.findElement(webdriver.By.css(".delete-all-done-button")).click();
 };
 
 module.exports.setupErrorRoute = function(action, route) {

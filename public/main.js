@@ -4,6 +4,7 @@ var form = document.getElementById("todo-form");
 var todoTitle = document.getElementById("new-todo");
 var error = document.getElementById("error");
 var leftToDo = document.getElementById("count-label");
+var markDoneBox = document.getElementById("mark-done-box");
 
 form.onsubmit = function(event) {
     var title = todoTitle.value;
@@ -43,22 +44,28 @@ function getTodoList(callback) {
     createRequest.send();
 }
 
-function deleteToDo(event) {
+function deleteToDoEvent(event) {
     if (event && event.target) {
         var id = event.target.getAttribute("data-id");
         if (id) {
-            var createRequest = new XMLHttpRequest();
-            createRequest.open("DELETE", "/api/todo/" + id);
-            createRequest.onload = function () {
-                if (this.status === 200) {
-                    reloadTodoList();
-                } else {
-                    error.textContent = "Failed to delete. Server returned " + this.status + " - " + this.responseText;
-                }
-            };
-            createRequest.send();
+            deleteToDo(id, reloadTodoList);
         }
     }
+}
+
+function deleteToDo(id, callback) {
+    var createRequest = new XMLHttpRequest();
+    createRequest.open("DELETE", "/api/todo/" + id);
+    createRequest.onload = function () {
+        if (this.status === 200) {
+            if (callback) {
+                callback();
+            }
+        } else {
+            error.textContent = "Failed to delete. Server returned " + this.status + " - " + this.responseText;
+        }
+    };
+    createRequest.send();
 }
 
 function markDone(event) {
@@ -84,14 +91,29 @@ function markDone(event) {
     }
 }
 
+function clearDone(data) {
+    return function() {
+        data.forEach(function(todo) {
+            if (todo.isCompleted) {
+                deleteToDo(todo.id);
+            }
+        });
+        reloadTodoList();
+    };
+}
+
 function reloadTodoList() {
     while (todoList.firstChild) {
         todoList.removeChild(todoList.firstChild);
+    }
+    if (markDoneBox.firstChild) {
+        markDoneBox.removeChild(markDoneBox.firstChild);
     }
     todoListPlaceholder.style.display = "block";
     getTodoList(function(todos) {
         todoListPlaceholder.style.display = "none";
         var itemsLeftToDo = 0;
+        var itemsDone = 0;
         todos.forEach(function(todo) {
             var listItem = document.createElement("li");
             listItem.textContent = todo.title;
@@ -103,7 +125,7 @@ function reloadTodoList() {
             deleteButton.className = "delete-button";
             deleteButton.textContent = "Delete";
             deleteButton.setAttribute("data-id", todo.id);
-            deleteButton.onclick = deleteToDo;
+            deleteButton.onclick = deleteToDoEvent;
 
             if (!todo.isCompleted) {
                 var markDoneButton = document.createElement("button");
@@ -114,6 +136,8 @@ function reloadTodoList() {
 
                 listItem.appendChild(markDoneButton);
                 itemsLeftToDo++;
+            } else {
+                itemsDone++;
             }
 
             listItem.appendChild(deleteButton);
@@ -125,6 +149,15 @@ function reloadTodoList() {
             " " + itemsLeftToDo + " thing" +
             (itemsLeftToDo === 1 ? "" : "s") +
             " left to do";
+
+        if (itemsDone > 0) {
+            var clearAllButton = document.createElement("button");
+            clearAllButton.className = "delete-all-done-button";
+            clearAllButton.textContent = "Delete All Done";
+            clearAllButton.onclick = clearDone(todos);
+
+            markDoneBox.appendChild(clearAllButton);
+        }
     });
 }
 

@@ -131,5 +131,31 @@ testing.describe("end to end", function() {
             });
         });
     });
+    testing.describe("delete completed", function() {
+        testing.it("should delete all completed items", function() {
+            helpers.navigateToSite();
+            helpers.addTodo("Hello!");
+            helpers.markDone(0);
+
+            helpers.clearAllDone();
+            helpers.getTodoList().then(function(elements) {
+                assert.equal(elements.length, 0);
+            });
+        });
+
+        testing.it("should leave all uncompleted items", function() {
+            helpers.navigateToSite();
+            helpers.addTodo("Hello!");
+            helpers.addTodo("Hello again!");
+            helpers.addTodo("Hello a third time!");
+            helpers.markDone(0);
+
+            helpers.clearAllDone();
+            helpers.getTodoList().then(function(elements) {
+                assert.equal(elements.length, 2);
+            });
+        });
+
+    });
 });
 
