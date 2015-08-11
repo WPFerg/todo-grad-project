@@ -114,7 +114,7 @@ function clearDone(data) {
     };
 }
 
-function reloadTodoList(filters) {
+function reloadTodoList(filters, callback) {
     while (todoList.firstChild) {
         todoList.removeChild(todoList.firstChild);
     }
@@ -183,6 +183,10 @@ function reloadTodoList(filters) {
             deleteAllDoneButton.onclick = clearDone(todos);
             deleteAllDoneButton.style.display = "inline-block";
         }
+
+        if (callback) {
+            callback();
+        }
     });
 }
 
@@ -192,4 +196,10 @@ function setFilters(filters) {
     };
 }
 
-reloadTodoList();
+function pollServer() {
+    reloadTodoList({}, function() {
+        setTimeout(pollServer, 10000);
+    });
+}
+
+pollServer();
