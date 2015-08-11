@@ -7,6 +7,7 @@ var leftToDo = document.getElementById("count-label");
 var viewAllButton = document.getElementById("view-all-button");
 var viewActiveButton = document.getElementById("view-active-button");
 var viewCompleteButton = document.getElementById("view-complete-button");
+var viewSpinnerButton = document.getElementById("view-spinner-button");
 var deleteAllDoneButton = document.getElementById("delete-all-done-button");
 
 form.onsubmit = function(event) {
@@ -21,6 +22,18 @@ form.onsubmit = function(event) {
 viewAllButton.onclick = setFilters();
 viewActiveButton.onclick = setFilters({isCompleted: false});
 viewCompleteButton.onclick = setFilters({isCompleted: true});
+
+viewSpinnerButton.onclick = function() {
+    if(todoListPlaceholder.getAttribute("data-override") !== "true") {
+        todoListPlaceholder.style.display = "block";
+        todoListPlaceholder.setAttribute("data-override", "true");
+        viewSpinnerButton.innerHTML = "Hide OneDiv&trade; Spinner";
+    } else {
+        todoListPlaceholder.style.display = "none";
+        viewSpinnerButton.innerHTML = "Show OneDiv&trade; Spinner";
+        todoListPlaceholder.setAttribute("data-override", "false");
+    }
+};
 
 function createTodo(title, callback) {
     fetch("/api/todo", {
@@ -121,7 +134,9 @@ function reloadTodoList(filters, callback) {
     deleteAllDoneButton.style.display = "none";
     todoListPlaceholder.style.display = "block";
     getTodoList(function(todos) {
-        todoListPlaceholder.style.display = "none";
+        if(todoListPlaceholder.getAttribute("data-override") !== "true") {
+            todoListPlaceholder.style.display = "none";
+        }
         var itemsLeftToDo = 0;
         var itemsDone = 0;
 
@@ -139,8 +154,11 @@ function reloadTodoList(filters, callback) {
             }
 
             if (displayItem) {
-                listItem = document.createElement("li");
-                listItem.textContent = todo.title;
+                listItem = document.createElement("div");
+                var innerListItem = document.createElement("div");
+                innerListItem.textContent = todo.title;
+                listItem.appendChild(innerListItem);
+                listItem.className = "todo-item";
                 if (todo.isCompleted) {
                     listItem.className = "todo-done";
                 }

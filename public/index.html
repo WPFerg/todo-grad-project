@@ -18,11 +18,15 @@
                 <button id="view-all-button">View All Todos</button>
                 <button id="view-active-button">View Active Todos</button>
                 <button id="view-complete-button">View Complete Todos</button>
+                <button id="view-spinner-button">Show OneDiv&trade; Spinner</button>
             </div>
         </section>
         <section>
-            <h2 id="todo-list-placeholder">Loading...</h2>
-            <ul id="todo-list"></ul>
+            <div id="todo-list-placeholder">
+                <div id="todo-list-loading-spinner"></div>
+                <h2>Loading</h2>
+            </div>
+            <div id="todo-list"></div>
             <form id="todo-form">
                 <input id="new-todo" placeholder="What needs to be done?" autofocus>
                 <input id="submit-todo" type="submit" value="Create">

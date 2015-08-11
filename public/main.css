@@ -24,6 +24,10 @@ h1 {
     color: rgba(255, 255, 255, 0.87);
 }
 
+section {
+    padding: 10px;
+}
+
 .todo-done {
     text-decoration: line-through;
     color: #999;
@@ -43,9 +47,94 @@ button, input[type="submit"] {
     padding: 3px 10px;
     margin: 0 5px;
     box-shadow: 0 0 5px #8009DB;
+    outline: none;
 }
 
 button:hover, input[type="submit"]:hover {
     box-shadow: 0 0 15px #8009DB;
     background-color: #AD0AE8;
+    outline: none;
+}
+
+
+#todo-list-placeholder {
+    text-align: center;
+}
+
+#todo-list-loading-spinner {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: transparent;
+    margin: 30px;
+    box-shadow: 20px 0 0 rgba(230, 2, 255, 1),
+                15px 13px rgba(230, 2, 255, 0.83),
+                5px 20px 0 rgba(230, 2, 255, 0.66),
+                -5px 20px 0 rgba(230, 2, 255, 0.5),
+                -15px 13px 0 rgba(230, 2, 255, 0.33),
+                -20px 0 0 rgba(230, 2, 255, 0.17);
+    -webkit-animation-name: spin;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-duration: 1s;
+    display: inline-block;
+}
+
+.todo-item, .todo-done {
+    margin: 5px 0;
+}
+
+#mark-done-box button {
+    margin: 5px;
+    width: calc(25% - 15px);
+}
+
+.todo-done div, .todo-item div {
+    width: 60%;
+    display: inline-block;
+}
+
+.todo-done button, .todo-item button {
+    width: calc(20% - 15px);
+    margin: 0 5px;
+}
+
+@media(max-width:600px)
+{
+    #mark-done-box button {
+        width: 100%;
+        display: block;
+    }
+
+    .todo-done, .todo-item {
+        text-align: center;
+    }
+
+    .todo-done div, .todo-item div {
+        display: block;
+        width: 100%;
+    }
+
+    .todo-done button, .todo-item button {
+        display: block;
+        width: 100%;
+    }
+}
+
+@-webkit-keyframes spin
+{
+    0% {
+        -webkit-transform: rotate(360deg);
+    }
+    50% {
+        box-shadow: 20px 0 0 rgba(128, 9, 219, 1),
+                    15px 13px rgba(128, 9, 219, 0.83),
+                    5px 20px 0 rgba(128, 9, 219, 0.66),
+                    -5px 20px 0 rgba(128, 9, 219, 0.5),
+                    -15px 13px 0 rgba(128, 9, 219, 0.33),
+                    -20px 0 0 rgba(128, 9, 219, 0.17);
+    }
+    100% {
+        -webkit-transform: rotate(0deg);
+    }
 }
