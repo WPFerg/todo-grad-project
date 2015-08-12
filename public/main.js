@@ -21,7 +21,7 @@ form.onsubmit = function(event) {
     event.preventDefault();
 };
 
-viewAllButton.onclick = setFilters();
+viewAllButton.onclick = setFilters({});
 viewActiveButton.onclick = setFilters({isCompleted: false});
 viewCompleteButton.onclick = setFilters({isCompleted: true});
 
@@ -148,7 +148,7 @@ function reloadTodoList(filters, callback) {
             var listItem;
             var deleteButton;
             var markDoneButton;
-            if (filters) {
+            if (typeof filters !== "undefined") {
                 currentFilters = filters;
                 filters = currentFilters;
                 var keys = Object.keys(filters);
