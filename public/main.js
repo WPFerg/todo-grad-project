@@ -10,6 +10,7 @@ var viewCompleteButton = document.getElementById("view-complete-button");
 var viewSpinnerButton = document.getElementById("view-spinner-button");
 var deleteAllDoneButton = document.getElementById("delete-all-done-button");
 var markDoneBox = document.getElementById("mark-done-box");
+var currentFilters = {};
 
 form.onsubmit = function(event) {
     var title = todoTitle.value;
@@ -148,6 +149,8 @@ function reloadTodoList(filters, callback) {
             var deleteButton;
             var markDoneButton;
             if (filters) {
+                currentFilters = filters;
+                filters = currentFilters;
                 var keys = Object.keys(filters);
                 keys.forEach(function(key) {
                     if (filters[key] !== todo[key]) {
@@ -220,7 +223,7 @@ function setFilters(filters) {
 }
 
 function pollServer() {
-    reloadTodoList({}, function() {
+    reloadTodoList(currentFilters, function() {
         setTimeout(pollServer, 10000);
     });
 }

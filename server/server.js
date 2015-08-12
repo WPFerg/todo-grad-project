@@ -10,6 +10,7 @@ module.exports = function(port, middleware, callback) {
     }
     app.use(express.static("public"));
     app.use("/fetch/", express.static("node_modules/whatwg-fetch"));
+    app.use("/es6-promise/", express.static("node_modules/es6-promise/dist"));
     app.use(bodyParser.json());
 
     var latestId = 0;

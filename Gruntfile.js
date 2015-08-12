@@ -5,6 +5,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-mocha-istanbul");
     grunt.loadNpmTasks("grunt-execute");
     grunt.loadNpmTasks("grunt-nodemon");
+    grunt.loadNpmTasks("grunt-contrib-less");
+    grunt.loadNpmTasks("grunt-contrib-watch");
 
     var testOutputLocation = process.env.CIRCLE_TEST_REPORTS || "test_output";
     var artifactsLocation = "build_artifacts";
@@ -20,6 +22,19 @@ module.exports = function(grunt) {
                 options: {
                     watch: ["server"]
                 }
+            }
+        },
+        less: {
+            development: {
+                files: {
+                    "public/main-less.css": "public/main-less.less"
+                }
+            }
+        },
+        watch: {
+            less: {
+                files: ["**/*.less"],
+                tasks: ["less"]
             }
         },
         jshint: {

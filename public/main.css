@@ -28,13 +28,20 @@ section {
     padding: 10px;
 }
 
-.todo-done {
-    text-decoration: line-through;
-    color: #999;
+.scroll-fixer {
+    position: fixed;
+    height: 170px;
+    width: 100%;
+    overflow: hidden;
+    background-color: #FFCDE9;
 }
 
-#todo-list li {
-    height: 2.2em;
+.scrollable {
+    padding-top: 170px;
+}
+
+.todo-done {
+    color: #999;
 }
 
 button, input[type="submit"] {
@@ -125,10 +132,32 @@ button:disabled {
 .todo-done button, .todo-item button {
     width: calc(20% - 15px);
     margin: 0 5px;
+    color: #FFCDE9;
+    text-decoration: none;
+}
+
+.todo-done button:disabled, .todo-item button:disabled {
+    color: black;
+    text-decoration: none;
 }
 
 @media(max-width:600px)
 {
+    .scroll-fixer {
+        position: static;
+        height: initial;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .scrollable {
+        padding-top: 0;
+    }
+
+    #new-todo {
+        width: calc(100% - 100px);
+    }
+
     #mark-done-box {
         height: auto;
     }
@@ -144,15 +173,19 @@ button:disabled {
     }
 
     .todo-done, .todo-item {
+        background-color: #DEA8B8;
         text-align: center;
+        margin: 1em 0;
     }
 
     .todo-done div, .todo-item div {
         display: block;
+        margin: 1em 0;
         width: 100%;
     }
 
     .todo-done button, .todo-item button {
+        margin: 0;
         display: block;
         width: 100%;
     }

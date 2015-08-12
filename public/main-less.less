@@ -1,0 +1,315 @@
+@input-color: #FFD6E9;
+@background-colour: #FFCDE9;
+@mobile-task-background: #DEA8B8;
+@hot-pink: #E822CB;
+@vivid-purple: #AD0AE8;
+@deep-purple: #8009DB;
+
+@anim-name: spin;
+@anim-duration: 1s;
+@anim-repeat: infinite;
+@anim-timing: linear;
+
+@switchover-width: 975px;
+
+body {
+    background: @background-colour;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: sans-serif;
+    margin: 0;
+}
+
+header {
+    background-color: @hot-pink;
+    padding: 0.5em 1em;
+}
+
+section,
+h1 {
+    max-width: 1170px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    display: block;
+    font-size: 34px;
+    line-height: 34px;
+    color: rgba(255, 255, 255, 0.87);
+}
+
+section {
+    padding: 10px;
+}
+
+.scroll-fixer {
+    position: fixed;
+    z-index: 10;
+    height: 170px;
+    width: 100%;
+    overflow: hidden;
+    background-color: @background-colour;
+}
+
+.scrollable {
+    padding-top: 170px;
+}
+
+.todo-done {
+    color: #999;
+}
+
+#new-todo {
+    transition: all 1s;
+    background-color: @input-color;
+    padding: 7px 10px;
+    box-shadow: 0 0 0 @deep-purple;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid @deep-purple;
+
+    &:focus {
+        box-shadow: 0 0 10px @deep-purple;
+    }
+}
+
+button, input[type="submit"] {
+    transition: background-color 0.3s, box-shadow 0.3s;
+    background-color: @hot-pink;
+    color: @background-colour;
+    border-radius: 3px;
+    height: 30px;
+    border: 1px solid @vivid-purple;
+    padding: 3px 10px;
+    margin: 0 5px;
+    box-shadow: 0 0 5px @deep-purple;
+    outline: none;
+
+    &:hover {
+        box-shadow: 0 0 15px @deep-purple;
+        background-color: @vivid-purple;
+        outline: none;
+    }
+
+    &:disabled {
+        background-color: @input-color;
+        color: #777777;
+        box-shadow: none;
+    }
+}
+
+
+#todo-list-placeholder {
+    text-align: center;
+}
+
+#todo-list-loading-spinner {
+    position: relative;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: transparent;
+    margin: 30px;
+    box-shadow: 20px 0 0 rgba(230, 2, 255, 1),
+                15px 13px rgba(230, 2, 255, 0.83),
+                5px 20px 0 rgba(230, 2, 255, 0.66),
+                -5px 20px 0 rgba(230, 2, 255, 0.5),
+                -15px 13px 0 rgba(230, 2, 255, 0.33),
+                -20px 0 0 rgba(230, 2, 255, 0.17);
+
+    // Browser compatibility
+    -webkit-animation-name: @anim-name;
+    -webkit-animation-iteration-count: @anim-repeat;
+    -webkit-animation-timing-function: @anim-timing;
+    -webkit-animation-duration: @anim-duration;
+
+    -moz-animation-name: @anim-name;
+    -moz-animation-iteration-count: @anim-repeat;
+    -moz-animation-timing-function: @anim-timing;
+    -moz-animation-duration: @anim-duration;
+
+    -ms-animation-name: @anim-name;
+    -ms-animation-iteration-count: @anim-repeat;
+    -ms-animation-timing-function: @anim-timing;
+    -ms-animation-duration: @anim-duration;
+
+    animation-name: @anim-name;
+    animation-iteration-count: @anim-repeat;
+    animation-timing-function: @anim-timing;
+    animation-duration: @anim-duration;
+
+    display: inline-block;
+}
+
+#mark-done-box {
+    height: 40px;
+
+    button {
+        margin: 5px;
+        width: calc(~"25% - 15px");
+    }
+
+    &.delete-button-visible {
+        button {
+            width: calc(~"20% - 15px");
+        }
+    }
+}
+
+.todo-done, .todo-item {
+    margin: 5px 0;
+
+    div {
+        width: 60%;
+        display: inline-block;
+    }
+
+    button {
+        width: calc(~"20% - 15px");
+        margin: 0 5px;
+        color: @background-colour;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &:disabled {
+            color: black;
+        }
+    }
+}
+
+@media(max-width:@switchover-width)
+{
+    .scroll-fixer {
+        position: static;
+        height: initial;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .scrollable {
+        padding-top: 0;
+    }
+
+    #new-todo {
+        width: calc(~"100% - 100px");
+    }
+
+    #mark-done-box {
+        height: auto;
+
+        button {
+            width: 100%;
+            display: block;
+        }
+
+        &.delete-button-visible {
+            button {
+                width: 100%;
+                display: block;
+            }
+        }
+    }
+
+    .todo-done, .todo-item {
+        background-color: @mobile-task-background;
+        text-align: center;
+        margin: 1em 0;
+
+        div {
+            display: block;
+            margin: 1em 0;
+            width: 100%;
+        }
+
+        button {
+            margin: 0;
+            display: block;
+            width: 100%;
+        }
+    }
+}
+
+// Browser compatibility
+
+@-webkit-keyframes spin
+{
+    0% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+    50% {
+        box-shadow: 20px 0 0 rgba(128, 9, 219, 1),
+                    15px 13px rgba(128, 9, 219, 0.83),
+                    5px 20px 0 rgba(128, 9, 219, 0.66),
+                    -5px 20px 0 rgba(128, 9, 219, 0.5),
+                    -15px 13px 0 rgba(128, 9, 219, 0.33),
+                    -20px 0 0 rgba(128, 9, 219, 0.17);
+    }
+    100% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+}
+
+
+@-moz-keyframes spin
+{
+    0% {
+        -moz-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+    50% {
+        box-shadow: 20px 0 0 rgba(128, 9, 219, 1),
+                    15px 13px rgba(128, 9, 219, 0.83),
+                    5px 20px 0 rgba(128, 9, 219, 0.66),
+                    -5px 20px 0 rgba(128, 9, 219, 0.5),
+                    -15px 13px 0 rgba(128, 9, 219, 0.33),
+                    -20px 0 0 rgba(128, 9, 219, 0.17);
+    }
+    100% {
+        -moz-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+}
+
+@-ms-keyframes spin
+{
+    0% {
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+    50% {
+        box-shadow: 20px 0 0 rgba(128, 9, 219, 1),
+                    15px 13px rgba(128, 9, 219, 0.83),
+                    5px 20px 0 rgba(128, 9, 219, 0.66),
+                    -5px 20px 0 rgba(128, 9, 219, 0.5),
+                    -15px 13px 0 rgba(128, 9, 219, 0.33),
+                    -20px 0 0 rgba(128, 9, 219, 0.17);
+    }
+    100% {
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes spin
+{
+    0% {
+        transform: rotate(360deg);
+    }
+    50% {
+        box-shadow: 20px 0 0 rgba(128, 9, 219, 1),
+                    15px 13px rgba(128, 9, 219, 0.83),
+                    5px 20px 0 rgba(128, 9, 219, 0.66),
+                    -5px 20px 0 rgba(128, 9, 219, 0.5),
+                    -15px 13px 0 rgba(128, 9, 219, 0.33),
+                    -20px 0 0 rgba(128, 9, 219, 0.17);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
