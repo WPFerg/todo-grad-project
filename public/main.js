@@ -179,7 +179,7 @@ function reloadTodoList(filters, callback) {
 
                 markDoneButton = document.createElement("button");
                 markDoneButton.className = "mark-done-button";
-                if(todo.isCompleted) {
+                if (todo.isCompleted) {
                     markDoneButton.innerHTML = "&#10003; Finish" + (todo.isCompleted ? "ed" : "");
                 } else {
                     markDoneButton.innerHTML = "&#10003; Finish";
@@ -212,15 +212,15 @@ function reloadTodoList(filters, callback) {
 
         viewAllButton.textContent =
             "View All " + (itemsDone + itemsLeftToDo) + " Task" +
-            ((itemsDone + itemsLeftToDo) == 1 ? "" : "s");
+            ((itemsDone + itemsLeftToDo) === 1 ? "" : "s");
 
         viewActiveButton.textContent =
             "View " + (itemsLeftToDo) + " Task" +
-            ((itemsLeftToDo) == 1 ? "" : "s") + " Left to Do";
+            ((itemsLeftToDo) === 1 ? "" : "s") + " Left to Do";
 
         viewCompleteButton.textContent =
             "View " + (itemsDone) + " Completed Task" +
-            ((itemsDone) == 1 ? "" : "s");
+            ((itemsDone) === 1 ? "" : "s");
 
         if (itemsDone > 0) {
             deleteAllDoneButton.onclick = clearDone(todos);
