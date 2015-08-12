@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="party-mode">
     <head>
         <meta charset="utf-8">
         <title>TODO List</title>
@@ -13,8 +13,13 @@
             <header>
                 <h1>TODO List</h1>
             </header>
-            <section>
-                <div id="count-label"></div>
+            <section id="header-section">
+                <form id="todo-form">
+                    <input id="new-todo" placeholder="What needs to be done?" autofocus>
+                    <input id="submit-todo" type="submit" value="Create">
+                </form>
+                <div id="count-label">
+                </div>
                 <div id="mark-done-box">
                     <button id="delete-all-done-button">Delete All Completed</button>
                     <button id="view-all-button">View All Todos</button>
@@ -30,10 +35,6 @@
                 <h2>Loading</h2>
             </div>
             <div id="todo-list"></div>
-            <form id="todo-form">
-                <input id="new-todo" placeholder="What needs to be done?" autofocus>
-                <input id="submit-todo" type="submit" value="Create">
-            </form>
             <div id="error"></div>
         </section>
         <script type="text/javascript" src="main.js"></script>

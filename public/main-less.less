@@ -4,13 +4,36 @@
 @hot-pink: #E822CB;
 @vivid-purple: #AD0AE8;
 @deep-purple: #8009DB;
+@grey: #777777;
+
+// -- Blue --
+//@input-color: #E9D4FF;
+//@background-colour: #CDBBE0;
+//@mobile-task-background: #A7A6DE;
+//@hot-pink: #0073FF;
+//@vivid-purple: #1F00FF;
+//@deep-purple: #0E0073;
+//@grey: #777777;
 
 @anim-name: spin;
 @anim-duration: 1s;
 @anim-repeat: infinite;
 @anim-timing: linear;
 
+@header-height: 180px;
 @switchover-width: 975px;
+
+html {
+    min-height: 100%;
+    background-color: @background-colour;
+
+    &.party-mode {
+        -webkit-animation-name: crazy-colour-fun;
+        -webkit-animation-iteration-count: @anim-repeat;
+        -webkit-animation-timing-function: @anim-timing;
+        -webkit-animation-duration: 600s;
+    }
+}
 
 body {
     background: @background-colour;
@@ -45,18 +68,18 @@ section {
 .scroll-fixer {
     position: fixed;
     z-index: 10;
-    height: 170px;
+    height: @header-height;
     width: 100%;
     overflow: hidden;
     background-color: @background-colour;
 }
 
 .scrollable {
-    padding-top: 170px;
+    padding-top: @header-height;
 }
 
 .todo-done {
-    color: #999;
+    color: @grey;
 }
 
 #new-todo {
@@ -82,8 +105,9 @@ button, input[type="submit"] {
     border: 1px solid @vivid-purple;
     padding: 3px 10px;
     margin: 0 5px;
-    box-shadow: 0 0 5px @deep-purple;
+    box-shadow: 0 0 0 @deep-purple;
     outline: none;
+    font-weight: bold;
 
     &:hover {
         box-shadow: 0 0 15px @deep-purple;
@@ -93,11 +117,41 @@ button, input[type="submit"] {
 
     &:disabled {
         background-color: @input-color;
-        color: #777777;
+        color: @grey;
         box-shadow: none;
+        font-weight: normal;
     }
 }
 
+#todo-form, #count-label {
+    display: inline-block;
+    text-align: center;
+}
+
+
+#header-section {
+    #todo-form {
+        width: 49%;
+    }
+
+    #count-label {
+        width: 49%;
+    }
+
+    &.delete-button-visible {
+        #todo-form {
+            width: 40%;
+        }
+
+        #count-label {
+            width: 59%;
+        }
+    }
+}
+
+#new-todo {
+    width: calc(~"100% - 110px");
+}
 
 #todo-list-placeholder {
     text-align: center;
@@ -158,15 +212,15 @@ button, input[type="submit"] {
 }
 
 .todo-done, .todo-item {
-    margin: 5px 0;
+    margin: 1.2em 0;
 
     div {
-        width: 60%;
+        width: 80%;
         display: inline-block;
     }
 
     button {
-        width: calc(~"20% - 15px");
+        width: calc(~"10% - 15px");
         margin: 0 5px;
         color: @background-colour;
         text-decoration: none;
@@ -194,8 +248,11 @@ button, input[type="submit"] {
         padding-top: 0;
     }
 
-    #new-todo {
-        width: calc(~"100% - 100px");
+    #header-section, #header-section.delete-button-visible {
+        #todo-form, #count-label {
+            display: block;
+            width: 100%;
+        }
     }
 
     #mark-done-box {
@@ -233,6 +290,19 @@ button, input[type="submit"] {
     }
 }
 
+@media(max-width:1100px) {
+    .todo-done, .todo-item {
+
+        div {
+            width: 60%;
+        }
+
+        button {
+            width: calc(~"20% - 15px");
+        }
+    }
+}
+
 // Browser compatibility
 
 @-webkit-keyframes spin
@@ -253,6 +323,11 @@ button, input[type="submit"] {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+}
+
+@-webkit-keyframes crazy-colour-fun {
+    from { -webkit-filter: hue-rotate(0deg); }
+    to { -webkit-filter: hue-rotate(360deg); }
 }
 
 
