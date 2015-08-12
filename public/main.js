@@ -9,6 +9,7 @@ var viewActiveButton = document.getElementById("view-active-button");
 var viewCompleteButton = document.getElementById("view-complete-button");
 var viewSpinnerButton = document.getElementById("view-spinner-button");
 var deleteAllDoneButton = document.getElementById("delete-all-done-button");
+var markDoneBox = document.getElementById("mark-done-box");
 
 form.onsubmit = function(event) {
     var title = todoTitle.value;
@@ -132,6 +133,7 @@ function reloadTodoList(filters, callback) {
         todoList.removeChild(todoList.firstChild);
     }
     deleteAllDoneButton.style.display = "none";
+    markDoneBox.className = "";
     todoListPlaceholder.style.display = "block";
     getTodoList(function(todos) {
         if (todoListPlaceholder.getAttribute("data-override") !== "true") {
@@ -144,6 +146,7 @@ function reloadTodoList(filters, callback) {
             var displayItem = true;
             var listItem;
             var deleteButton;
+            var markDoneButton;
             if (filters) {
                 var keys = Object.keys(filters);
                 keys.forEach(function(key) {
@@ -168,24 +171,25 @@ function reloadTodoList(filters, callback) {
                 deleteButton.textContent = "Delete";
                 deleteButton.setAttribute("data-id", todo.id);
                 deleteButton.onclick = deleteToDoEvent;
+
+                markDoneButton = document.createElement("button");
+                markDoneButton.className = "mark-done-button";
+                markDoneButton.textContent = "Mark Done";
+                markDoneButton.setAttribute("data-id", todo.id);
+                markDoneButton.onclick = markDone;
             }
 
             if (!todo.isCompleted) {
-                if (displayItem) {
-                    var markDoneButton = document.createElement("button");
-                    markDoneButton.className = "mark-done-button";
-                    markDoneButton.textContent = "Mark Done";
-                    markDoneButton.setAttribute("data-id", todo.id);
-                    markDoneButton.onclick = markDone;
-
-                    listItem.appendChild(markDoneButton);
-                }
                 itemsLeftToDo++;
             } else {
+                if (displayItem) {
+                    markDoneButton.disabled = true;
+                }
                 itemsDone++;
             }
 
             if (displayItem) {
+                listItem.appendChild(markDoneButton);
                 listItem.appendChild(deleteButton);
                 todoList.appendChild(listItem);
             }
@@ -200,6 +204,7 @@ function reloadTodoList(filters, callback) {
         if (itemsDone > 0) {
             deleteAllDoneButton.onclick = clearDone(todos);
             deleteAllDoneButton.style.display = "inline-block";
+            markDoneBox.className = "delete-button-visible";
         }
 
         if (callback) {

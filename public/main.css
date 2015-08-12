@@ -38,7 +38,7 @@ section {
 }
 
 button, input[type="submit"] {
-    transition: all 0.3s;
+    transition: background-color 0.3s, box-shadow 0.3s;
     background-color: #E822CB;
     color: #FFCDE9;
     border-radius: 3px;
@@ -50,10 +50,30 @@ button, input[type="submit"] {
     outline: none;
 }
 
+#new-todo {
+    transition: all 1s;
+    background-color: #FFD6E9;
+    padding: 7px 10px;
+    box-shadow: 0 0 0 #8009DB;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid #7509DB;
+}
+
+#new-todo:focus {
+    box-shadow: 0 0 10px #8009DB;
+}
+
 button:hover, input[type="submit"]:hover {
     box-shadow: 0 0 15px #8009DB;
     background-color: #AD0AE8;
     outline: none;
+}
+
+button:disabled {
+    background-color: #FFD6E9;
+    color: #777;
+    box-shadow: none;
 }
 
 
@@ -84,9 +104,17 @@ button:hover, input[type="submit"]:hover {
     margin: 5px 0;
 }
 
+#mark-done-box {
+    height: 40px;
+}
+
 #mark-done-box button {
     margin: 5px;
     width: calc(25% - 15px);
+}
+
+#mark-done-box.delete-button-visible button {
+    width: calc(20% - 15px);
 }
 
 .todo-done div, .todo-item div {
@@ -101,7 +129,16 @@ button:hover, input[type="submit"]:hover {
 
 @media(max-width:600px)
 {
+    #mark-done-box {
+        height: auto;
+    }
+
     #mark-done-box button {
+        width: 100%;
+        display: block;
+    }
+
+    #mark-done-box.delete-button-visible button {
         width: 100%;
         display: block;
     }
