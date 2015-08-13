@@ -27,7 +27,11 @@
     </div>
     <div id="todo-list" ng-repeat="todo in todos | filter:appliedFilters">
         <div ng-class="{'todo-item': !todo.isCompleted, 'todo-done': todo.isCompleted}">
-            <div ng-bind="todo.title"></div>
+            <div ng-hide="editingItem === todo" ng-bind="todo.title" ng-click="editMode(todo)"></div>
+            <form ng-show="editingItem === todo" ng-submit="finishedEditing(todo)">
+                <input class="edit-text" type="text" ng-model="todo.title" autofocus />
+                <input class="edit-save" type="submit" value="Save" />
+            </form>
             <button class="mark-done-button" data-id="{{todo.id}}" ng-disabled="todo.isCompleted" ng-click="markDone(todo)">
                 &#10003; Finish{{todo.isCompleted ? "ed" : ""}}
             </button>

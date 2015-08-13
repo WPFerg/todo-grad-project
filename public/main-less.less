@@ -214,6 +214,22 @@ button, input[type="submit"] {
 .todo-done, .todo-item {
     margin: 1.2em 0;
 
+    form {
+        width: 80%;
+        display: inline-block;
+
+        .edit-text {
+            width: calc(~"100% - 130px");
+            padding: 7px;
+            border-radius: 3px;
+            border: 1px solid @deep-purple;
+        }
+
+        .edit-save {
+            width: 90px;
+        }
+    }
+
     div {
         width: 80%;
         display: inline-block;
@@ -237,6 +253,10 @@ button, input[type="submit"] {
 
 @media(max-width:1100px) {
     .todo-done, .todo-item {
+
+        form {
+            width: 60%;
+        }
 
         div {
             width: 60%;
@@ -288,6 +308,22 @@ button, input[type="submit"] {
         background-color: @mobile-task-background;
         text-align: center;
         margin: 1em 0;
+
+        form {
+            width: 100%;
+            display: block;
+
+            .edit-text {
+                display: block;
+                width: calc(~"100% - 14px");
+            }
+
+            .edit-save {
+                display: block;
+                width: 100%;
+                margin: 0;
+            }
+        }
 
         div {
             display: block;

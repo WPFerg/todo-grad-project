@@ -150,6 +150,22 @@ input[type="submit"]:disabled {
 .todo-item {
   margin: 1.2em 0;
 }
+.todo-done form,
+.todo-item form {
+  width: 80%;
+  display: inline-block;
+}
+.todo-done form .edit-text,
+.todo-item form .edit-text {
+  width: calc(100% - 130px);
+  padding: 7px;
+  border-radius: 3px;
+  border: 1px solid #8009db;
+}
+.todo-done form .edit-save,
+.todo-item form .edit-save {
+  width: 90px;
+}
 .todo-done div,
 .todo-item div {
   width: 80%;
@@ -171,6 +187,10 @@ input[type="submit"]:disabled {
   color: black;
 }
 @media (max-width: 1100px) {
+  .todo-done form,
+  .todo-item form {
+    width: 60%;
+  }
   .todo-done div,
   .todo-item div {
     width: 60%;
@@ -213,6 +233,22 @@ input[type="submit"]:disabled {
     background-color: #dea8b8;
     text-align: center;
     margin: 1em 0;
+  }
+  .todo-done form,
+  .todo-item form {
+    width: 100%;
+    display: block;
+  }
+  .todo-done form .edit-text,
+  .todo-item form .edit-text {
+    display: block;
+    width: calc(100% - 14px);
+  }
+  .todo-done form .edit-save,
+  .todo-item form .edit-save {
+    display: block;
+    width: 100%;
+    margin: 0;
   }
   .todo-done div,
   .todo-item div {

@@ -37,7 +37,9 @@ module.exports = function(port, middleware, callback) {
 
             if (todoItem) {
                 todoItem.title = update.title || todoItem.title;
-                todoItem.isCompleted = update.isCompleted || todoItem.isCompleted;
+                if (typeof update.isCompleted !== "undefined") {
+                    todoItem.isCompleted = update.isCompleted;
+                }
                 res.sendStatus(200);
             } else {
                 // Force an update of the ID to avoid collisions

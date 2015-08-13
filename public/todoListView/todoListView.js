@@ -19,6 +19,7 @@
         $scope.isLoading = false;
         $scope.loadingOverride = false;
         $scope.errorText = "";
+        $scope.editingItem = null;
 
         // To do items
         $scope.todos = [];
@@ -62,12 +63,20 @@
 
         $scope.markDone = function (todo) {
             todo.isCompleted = true;
-            $scope.$modifyToDo(todo, function () {
-                $scope.reloadTodos();
-            });
+            $scope.$modifyTodo(todo, $scope.reloadTodos);
         };
 
-        $scope.$modifyToDo = function (todoData, callback) {
+        $scope.editMode = function(todo) {
+            $scope.editingItem = todo;
+        };
+
+        $scope.finishedEditing = function (todo) {
+            todo.isCompleted = false;
+            $scope.editMode(null);
+            $scope.$modifyTodo(todo, $scope.reloadTodos);
+        };
+
+        $scope.$modifyTodo = function (todoData, callback) {
             TodoApi.update(todoData, function (response) {
                 if (callback) {
                     callback(response);
