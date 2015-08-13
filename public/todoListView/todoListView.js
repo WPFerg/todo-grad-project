@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module("todoApp.todoListView", ["ngRoute"])
+    angular.module("todoApp.todoListView", ["ngRoute", "todoApp.todoApi"])
 
     .config(["$routeProvider", function ($routeProvider) {
         $routeProvider.when("/", {
@@ -10,7 +10,8 @@
         });
     }])
 
-    .controller("TodoListView", ["$scope", "$http", function ($scope, $http) {
+    .controller("TodoListView", ["$scope", "$http", "TodoApi", function ($scope, $http, TodoApi) {
+
         // Bound models
         $scope.todoToCreate = "";
 
@@ -28,7 +29,7 @@
         $scope.createTodo = function () {
             var title = $scope.todoToCreate;
             $scope.todoToCreate = "";
-            $http.post("/api/todo", {title: title}).then(function (response) {
+            TodoApi.save({title: title}, function () {
                 $scope.reloadTodos();
             }, function (error) {
                 $scope.errorText = "Failed to create item. Server returned " + error.status + " - " +
@@ -39,11 +40,10 @@
         $scope.reloadTodos = function () {
             $scope.isLoading = true;
 
-            $http.get("/api/todo").then(function (response) {
+            $scope.todos = TodoApi.query({}, function() {
                 $scope.isLoading = false;
-                $scope.todos = response.data;
                 $scope.$recalculateItemNumbers();
-            }, function (error) {
+            }, function(error) {
                 $scope.errorText = "Failed to get list. Server returned " + error.status + " - " +
                     error.statusText;
                 $scope.isLoading = false;
@@ -68,7 +68,7 @@
         };
 
         $scope.$modifyToDo = function (todoData, callback) {
-            $http.put("/api/todo", todoData).then(function (response) {
+            TodoApi.update(todoData, function (response) {
                 if (callback) {
                     callback(response);
                 }
@@ -100,7 +100,7 @@
         };
 
         $scope.$deleteTodo = function (id, callback) {
-            $http.delete("/api/todo/" + id).then(function (response) {
+            TodoApi.delete({id: id}, function () {
                 if (callback) {
                     callback();
                 }
