@@ -1,0 +1,287 @@
+html {
+  min-height: 100%;
+  background-color: #ffcde9;
+}
+html.party-mode {
+  -webkit-animation-name: crazy-colour-fun;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-duration: 600s;
+}
+body {
+  background: #ffcde9;
+  color: rgba(0, 0, 0, 0.87);
+  font-family: sans-serif;
+  margin: 0;
+}
+header {
+  background-color: #e822cb;
+  padding: 0.5em 1em;
+}
+section,
+h1 {
+  max-width: 1170px;
+  margin-left: auto;
+  margin-right: auto;
+}
+h1 {
+  display: block;
+  font-size: 34px;
+  line-height: 34px;
+  color: rgba(255, 255, 255, 0.87);
+}
+section {
+  padding: 10px;
+}
+.scroll-fixer {
+  position: fixed;
+  z-index: 10;
+  height: 180px;
+  width: 100%;
+  overflow: hidden;
+  background-color: #ffcde9;
+}
+.scrollable {
+  padding-top: 180px;
+}
+.todo-done {
+  color: #777777;
+}
+#new-todo {
+  transition: all 1s;
+  background-color: #ffd6e9;
+  padding: 7px 10px;
+  box-shadow: 0 0 0 #8009db;
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid #8009db;
+}
+#new-todo:focus {
+  box-shadow: 0 0 10px #8009db;
+}
+button,
+input[type="submit"] {
+  transition: background-color 0.3s, box-shadow 0.3s;
+  background-color: #e822cb;
+  color: #ffcde9;
+  border-radius: 3px;
+  height: 30px;
+  border: 1px solid #ad0ae8;
+  padding: 3px 10px;
+  margin: 0 5px;
+  box-shadow: 0 0 0 #8009db;
+  outline: none;
+  font-weight: bold;
+}
+button:hover,
+input[type="submit"]:hover {
+  box-shadow: 0 0 15px #8009db;
+  background-color: #ad0ae8;
+  outline: none;
+}
+button:disabled,
+input[type="submit"]:disabled {
+  background-color: #ffd6e9;
+  color: #777777;
+  box-shadow: none;
+  font-weight: normal;
+}
+#todo-form,
+#count-label {
+  display: inline-block;
+  text-align: center;
+}
+#header-section #todo-form {
+  width: 49%;
+}
+#header-section #count-label {
+  width: 49%;
+}
+#header-section.delete-button-visible #todo-form {
+  width: 40%;
+}
+#header-section.delete-button-visible #count-label {
+  width: 59%;
+}
+#new-todo {
+  width: calc(100% - 110px);
+}
+#todo-list-placeholder {
+  text-align: center;
+}
+#todo-list-loading-spinner {
+  position: relative;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: transparent;
+  margin: 30px;
+  box-shadow: 20px 0 0 #e602ff, 15px 13px rgba(230, 2, 255, 0.83), 5px 20px 0 rgba(230, 2, 255, 0.66), -5px 20px 0 rgba(230, 2, 255, 0.5), -15px 13px 0 rgba(230, 2, 255, 0.33), -20px 0 0 rgba(230, 2, 255, 0.17);
+  -webkit-animation-name: spin;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-duration: 1s;
+  -moz-animation-name: spin;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+  -moz-animation-duration: 1s;
+  -ms-animation-name: spin;
+  -ms-animation-iteration-count: infinite;
+  -ms-animation-timing-function: linear;
+  -ms-animation-duration: 1s;
+  animation-name: spin;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-duration: 1s;
+  display: inline-block;
+}
+#mark-done-box {
+  height: 40px;
+}
+#mark-done-box button {
+  margin: 5px;
+  width: calc(25% - 15px);
+}
+#mark-done-box.delete-button-visible button {
+  width: calc(20% - 15px);
+}
+.todo-done,
+.todo-item {
+  margin: 1.2em 0;
+}
+.todo-done div,
+.todo-item div {
+  width: 80%;
+  display: inline-block;
+}
+.todo-done button,
+.todo-item button {
+  width: calc(10% - 15px);
+  margin: 0 5px;
+  color: #ffcde9;
+  text-decoration: none;
+}
+.todo-done button:hover,
+.todo-item button:hover {
+  text-decoration: none;
+}
+.todo-done button:disabled,
+.todo-item button:disabled {
+  color: black;
+}
+@media (max-width: 1100px) {
+  .todo-done div,
+  .todo-item div {
+    width: 60%;
+  }
+  .todo-done button,
+  .todo-item button {
+    width: calc(20% - 15px);
+  }
+}
+@media (max-width: 975px) {
+  .scroll-fixer {
+    position: static;
+    height: initial;
+    width: 100%;
+    overflow: hidden;
+  }
+  .scrollable {
+    padding-top: 0;
+  }
+  #header-section #todo-form,
+  #header-section.delete-button-visible #todo-form,
+  #header-section #count-label,
+  #header-section.delete-button-visible #count-label {
+    display: block;
+    width: 100%;
+  }
+  #mark-done-box {
+    height: auto;
+  }
+  #mark-done-box button {
+    width: 100%;
+    display: block;
+  }
+  #mark-done-box.delete-button-visible button {
+    width: 100%;
+    display: block;
+  }
+  .todo-done,
+  .todo-item {
+    background-color: #dea8b8;
+    text-align: center;
+    margin: 1em 0;
+  }
+  .todo-done div,
+  .todo-item div {
+    display: block;
+    margin: 1em 0;
+    width: 100%;
+  }
+  .todo-done button,
+  .todo-item button {
+    margin: 0;
+    display: block;
+    width: 100%;
+  }
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+  50% {
+    box-shadow: 20px 0 0 #8009db, 15px 13px rgba(128, 9, 219, 0.83), 5px 20px 0 rgba(128, 9, 219, 0.66), -5px 20px 0 rgba(128, 9, 219, 0.5), -15px 13px 0 rgba(128, 9, 219, 0.33), -20px 0 0 rgba(128, 9, 219, 0.17);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+}
+@-webkit-keyframes crazy-colour-fun {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(360deg);
+  }
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+  50% {
+    box-shadow: 20px 0 0 #8009db, 15px 13px rgba(128, 9, 219, 0.83), 5px 20px 0 rgba(128, 9, 219, 0.66), -5px 20px 0 rgba(128, 9, 219, 0.5), -15px 13px 0 rgba(128, 9, 219, 0.33), -20px 0 0 rgba(128, 9, 219, 0.17);
+  }
+  100% {
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+}
+@-ms-keyframes spin {
+  0% {
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+  50% {
+    box-shadow: 20px 0 0 #8009db, 15px 13px rgba(128, 9, 219, 0.83), 5px 20px 0 rgba(128, 9, 219, 0.66), -5px 20px 0 rgba(128, 9, 219, 0.5), -15px 13px 0 rgba(128, 9, 219, 0.33), -20px 0 0 rgba(128, 9, 219, 0.17);
+  }
+  100% {
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(360deg);
+  }
+  50% {
+    box-shadow: 20px 0 0 #8009db, 15px 13px rgba(128, 9, 219, 0.83), 5px 20px 0 rgba(128, 9, 219, 0.66), -5px 20px 0 rgba(128, 9, 219, 0.5), -15px 13px 0 rgba(128, 9, 219, 0.33), -20px 0 0 rgba(128, 9, 219, 0.17);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

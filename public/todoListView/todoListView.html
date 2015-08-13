@@ -1,0 +1,38 @@
+<div class="scroll-fixer">
+    <header>
+        <h1>TODO List</h1>
+    </header>
+    <section id="header-section">
+        <form id="todo-form" ng-submit="createTodo()">
+            <input id="new-todo" placeholder="What needs to be done?" autofocus ng-model="todoToCreate">
+            <input id="submit-todo" type="submit" value="Create">
+        </form>
+        <div id="count-label">
+            There {{itemsLeftToDo == 1 ? "is" : "are"}} {{itemsLeftToDo}} thing{{itemsLeftToDo === 1 ? "" : "s"}}
+            left to do
+        </div>
+        <div id="mark-done-box" ng-class="{'delete-button-visible': itemsDone}">
+            <button id="delete-all-done-button" ng-click="deleteAllDone()" ng-show="itemsDone">Delete All Completed</button>
+            <button id="view-all-button" ng-click="resetFilters()">View All Todos</button>
+            <button id="view-active-button" ng-click="setFilter('isCompleted', false)">View Active Todos</button>
+            <button id="view-complete-button" ng-click="setFilter('isCompleted', true)">View Complete Todos</button>
+            <button id="view-spinner-button" ng-click="toggleLoadSpinner()">Show OneDiv&trade; Spinner</button>
+        </div>
+    </section>
+</div>
+<section class="scrollable">
+    <div id="todo-list-placeholder" ng-show="isLoading || loadingOverride">
+        <div id="todo-list-loading-spinner"></div>
+        <h2>Loading</h2>
+    </div>
+    <div id="todo-list" ng-repeat="todo in todos | filter:appliedFilters">
+        <div ng-class="{'todo-item': !todo.isCompleted, 'todo-done': todo.isCompleted}">
+            <div ng-bind="todo.title"></div>
+            <button class="mark-done-button" data-id="{{todo.id}}" ng-disabled="todo.isCompleted" ng-click="markDone(todo)">
+                &#10003; Finish{{todo.isCompleted ? "ed" : ""}}
+            </button>
+            <button class="delete-button" data-id="{{todo.id}}" ng-click="deleteTodoButton(todo)">&#x2717; Delete</button>
+        </div>
+    </div>
+    <div id="error" ng-bind="errorText"></div>
+</section>
