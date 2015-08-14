@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module("todoApp.todoListView", ["ngRoute", "todoApp.todoApi"])
+    angular.module("todoApp.todoListView", ["ngRoute", "todoApp.todoApi", "todoApp.applyClassOnClick"])
 
     .config(["$routeProvider", function ($routeProvider) {
         $routeProvider.when("/", {

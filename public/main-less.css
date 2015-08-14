@@ -2,11 +2,11 @@ html {
   min-height: 100%;
   background-color: #ffcde9;
 }
-html.party-mode {
+.party-mode {
   -webkit-animation-name: crazy-colour-fun;
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear;
-  -webkit-animation-duration: 600s;
+  -webkit-animation-duration: 1s;
 }
 body {
   background: #ffcde9;

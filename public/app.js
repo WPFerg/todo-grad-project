@@ -6,7 +6,8 @@
         "ngRoute",
         "ngResource",
         "todoApp.todoListView",
-        "todoApp.todoApi"
+        "todoApp.todoApi",
+        "todoApp.applyClassOnClick"
     ]).
     config(["$routeProvider", function ($routeProvider) {
         $routeProvider.otherwise({redirectTo: "/"});
