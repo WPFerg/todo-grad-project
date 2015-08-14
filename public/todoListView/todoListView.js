@@ -26,6 +26,7 @@
         $scope.itemsDone = 0;
         $scope.itemsLeftToDo = 0;
         $scope.appliedFilters = {};
+        $scope.noFiltersApplied = true;
 
         $scope.createTodo = function () {
             var title = $scope.todoToCreate;
@@ -129,9 +130,11 @@
 
         $scope.resetFilters = function () {
             $scope.appliedFilters = {};
+            $scope.noFiltersApplied = true;
         };
 
         $scope.setFilter = function(key, value) {
+            $scope.noFiltersApplied = false;
             $scope.appliedFilters[key] = value;
         };
 

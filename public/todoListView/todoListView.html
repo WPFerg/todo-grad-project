@@ -12,16 +12,30 @@
             left to do
         </div>
         <div id="mark-done-box" ng-class="{'delete-button-visible': itemsDone}">
-            <button id="delete-all-done-button" ng-click="deleteAllDone()" ng-show="itemsDone">Delete All Completed</button>
-            <button id="view-all-button" ng-click="resetFilters()">View All Todos</button>
-            <button id="view-active-button" ng-click="setFilter('isCompleted', false)">View Active Todos</button>
-            <button id="view-complete-button" ng-click="setFilter('isCompleted', true)">View Complete Todos</button>
+            <button id="delete-all-done-button" ng-click="deleteAllDone()" ng-show="itemsDone">
+                Delete All Completed
+            </button>
+            <button id="view-all-button"
+                    ng-click="resetFilters()"
+                    ng-disabled="noFiltersApplied">
+                View All Todos
+            </button>
+            <button id="view-active-button"
+                    ng-click="setFilter('isCompleted', false)"
+                    ng-disabled="appliedFilters.isCompleted === false">
+                View Active Todos
+            </button>
+            <button id="view-complete-button"
+                    ng-click="setFilter('isCompleted', true)"
+                    ng-disabled="appliedFilters.isCompleted">
+                View Complete Todos
+            </button>
             <button id="view-spinner-button" ng-click="toggleLoadSpinner()">Show OneDiv&trade; Spinner</button>
         </div>
     </section>
 </div>
 <section class="scrollable">
-    <div id="todo-list-placeholder" ng-show="isLoading || loadingOverride">
+    <div id="todo-list-placeholder" ng-show="isLoading || loadingOverride" apply-class-on-click="party-mode">
         <div id="todo-list-loading-spinner"></div>
         <h2>Loading</h2>
     </div>
