@@ -21,19 +21,21 @@
             <button id="view-all-button"
                     ng-click="resetFilters()"
                     ng-disabled="noFiltersApplied">
-                View All Todos
+                View All {{todos.length}} Todo{{todos.length === 1 ? "" : "s"}}
             </button>
             <button id="view-active-button"
                     ng-click="setFilter('isCompleted', false)"
                     ng-disabled="appliedFilters.isCompleted === false">
-                View Active Todos
+                View {{itemsLeftToDo}} Active Todo{{itemsLeftToDo === 1 ? "" : "s"}}
             </button>
             <button id="view-complete-button"
                     ng-click="setFilter('isCompleted', true)"
                     ng-disabled="appliedFilters.isCompleted">
-                View Complete Todos
+                View {{itemsDone}} Complete Todo{{itemsDone === 1 ? "" : "s"}}
             </button>
-            <button id="view-spinner-button" ng-click="toggleLoadSpinner()">Show OneDiv&trade; Spinner</button>
+            <button id="view-spinner-button" ng-click="toggleLoadSpinner()">
+                {{loadingOverride ?  "Hide" : "Show"}} OneDiv&trade; Spinner
+            </button>
         </div>
     </section>
 </div>
