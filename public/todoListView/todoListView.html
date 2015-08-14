@@ -2,7 +2,7 @@
     <header>
         <h1>TODO List</h1>
     </header>
-    <section id="header-section">
+    <section id="header-section" ng-class="{'delete-button-visible': itemsDone}">
         <form id="todo-form" ng-submit="createTodo()">
             <input id="new-todo" placeholder="What needs to be done?" autofocus ng-model="todoToCreate">
             <input id="submit-todo" type="submit" value="Create">

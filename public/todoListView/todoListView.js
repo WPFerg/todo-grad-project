@@ -88,7 +88,11 @@
         };
 
         $scope.deleteTodoButton = function (todo) {
-            $scope.$deleteTodo(todo.id, $scope.reloadTodos);
+            $scope.$deleteTodo(todo.id, function() {
+                $scope.todos = $scope.todos.filter(function(otherTodo) {
+                    return todo !== otherTodo;
+                });
+            });
         };
 
         $scope.deleteAllDone = function () {
