@@ -126,12 +126,13 @@ button, input[type="submit"] {
 #todo-form, #count-label, #search-box {
     display: inline-block;
     text-align: center;
+    margin: 0 5px;
 }
 
 #search-box {
     .edit-text {
-        width: calc(~"100% - 20px");
-        margin: 0 10px;
+        width: calc(~"100% - 15px");
+        margin: 0;
     }
 }
 
@@ -143,28 +144,20 @@ button, input[type="submit"] {
 
 #header-section {
     #todo-form {
-        width: 49%;
+        width: calc(~"50% - 15px");
     }
 
-    #count-label {
-        width: 24.5%;
-    }
-
-    #search-box {
-        width: 24%;
+    #count-label, #search-box {
+        width: calc(~"25% - 15px");
     }
 
     &.delete-button-visible {
         #todo-form {
-            width: 40%;
+            width: calc(~"40% - 15px");
         }
 
-        #count-label {
-            width: 30%;
-        }
-
-        #search-box {
-            width: 30%;
+        #count-label, #search-box {
+            width: calc(~"30% - 15px");
         }
     }
 }
@@ -232,7 +225,6 @@ button, input[type="submit"] {
 }
 
 .todo-done, .todo-item {
-    margin: 1.2em 0;
 
     form {
         width: 80%;
@@ -265,6 +257,33 @@ button, input[type="submit"] {
         &:disabled {
             color: black;
         }
+    }
+}
+
+.list {
+    margin: 1.2em 0;
+}
+
+.list-transitions {
+    width: 100%;
+
+    &.ng-enter, &.ng-leave {
+        transition: all 1s;
+        overflow: hidden;
+        padding: 1.2em 0;
+    }
+
+    &.ng-enter, &.ng-leave-active {
+        height: 0;
+        padding: 0;
+    }
+
+    &.ng-enter-active {
+        height: 1.9em;
+    }
+
+    &.ng-move {
+        bottom: 1000px;
     }
 }
 

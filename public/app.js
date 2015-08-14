@@ -5,6 +5,7 @@
     angular.module("todoApp", [
         "ngRoute",
         "ngResource",
+        "ngAnimate",
         "todoApp.todoListView",
         "todoApp.todoApi",
         "todoApp.applyClassOnClick"
