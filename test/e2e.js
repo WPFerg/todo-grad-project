@@ -165,6 +165,17 @@ testing.describe("end to end", function() {
             helpers.markDone(1);
         });
 
+        testing.it("should hide non-matching search results", function() {
+            helpers.search("H");
+            helpers.getTodoList().then(function (elements) {
+                assert.equal(elements.length, 2);
+            });
+            helpers.search("e");
+            helpers.getTodoList().then(function (elements) {
+                assert.equal(elements.length, 1);
+            });
+        });
+
         testing.it("should hide inactive todos", function() {
             helpers.setFilter("active");
             helpers.getTodoList().then(function (elements) {

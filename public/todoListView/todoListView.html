@@ -11,6 +11,9 @@
             There {{itemsLeftToDo == 1 ? "is" : "are"}} {{itemsLeftToDo}} thing{{itemsLeftToDo === 1 ? "" : "s"}}
             left to do
         </div>
+        <div id="search-box">
+            <input class="edit-text" type="text" ng-model="search.title" placeholder="Search"/>
+        </div>
         <div id="mark-done-box" ng-class="{'delete-button-visible': itemsDone}">
             <button id="delete-all-done-button" ng-click="deleteAllDone()" ng-show="itemsDone">
                 Delete All Completed
@@ -39,7 +42,7 @@
         <div id="todo-list-loading-spinner"></div>
         <h2>Loading</h2>
     </div>
-    <div id="todo-list" ng-repeat="todo in todos | filter:appliedFilters">
+    <div id="todo-list" ng-repeat="todo in todos | filter:appliedFilters | filter:search">
         <div ng-class="{'todo-item': !todo.isCompleted, 'todo-done': todo.isCompleted}">
             <div ng-hide="editingItem === todo" ng-bind="todo.title" ng-click="editMode(todo)"></div>
             <form ng-show="editingItem === todo" ng-submit="finishedEditing(todo)">

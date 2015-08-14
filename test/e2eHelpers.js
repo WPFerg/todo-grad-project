@@ -105,6 +105,10 @@ module.exports.addTodo = function(text) {
     driver.findElement(webdriver.By.id("submit-todo")).click();
 };
 
+module.exports.search = function(text) {
+    driver.findElement(webdriver.By.css("#search-box .edit-text")).sendKeys(text);
+};
+
 module.exports.deleteTodo = function(id) {
     this.waitForListLoad();
     driver.findElement(webdriver.By.css(".delete-button[data-id='" + id + "']"))

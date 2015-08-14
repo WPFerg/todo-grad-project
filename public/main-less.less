@@ -123,11 +123,23 @@ button, input[type="submit"] {
     }
 }
 
-#todo-form, #count-label {
+#todo-form, #count-label, #search-box {
     display: inline-block;
     text-align: center;
 }
 
+#search-box {
+    .edit-text {
+        width: calc(~"100% - 20px");
+        margin: 0 10px;
+    }
+}
+
+.edit-text {
+    padding: 7px;
+    border-radius: 3px;
+    border: 1px solid @deep-purple;
+}
 
 #header-section {
     #todo-form {
@@ -135,7 +147,11 @@ button, input[type="submit"] {
     }
 
     #count-label {
-        width: 49%;
+        width: 24.5%;
+    }
+
+    #search-box {
+        width: 24%;
     }
 
     &.delete-button-visible {
@@ -144,7 +160,11 @@ button, input[type="submit"] {
         }
 
         #count-label {
-            width: 59%;
+            width: 30%;
+        }
+
+        #search-box {
+            width: 30%;
         }
     }
 }
@@ -220,9 +240,6 @@ button, input[type="submit"] {
 
         .edit-text {
             width: calc(~"100% - 130px");
-            padding: 7px;
-            border-radius: 3px;
-            border: 1px solid @deep-purple;
         }
 
         .edit-save {
@@ -282,7 +299,7 @@ button, input[type="submit"] {
     }
 
     #header-section, #header-section.delete-button-visible {
-        #todo-form, #count-label {
+        #todo-form, #count-label, #search-box {
             display: block;
             width: 100%;
         }

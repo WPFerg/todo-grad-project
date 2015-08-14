@@ -87,21 +87,37 @@ input[type="submit"]:disabled {
   font-weight: normal;
 }
 #todo-form,
-#count-label {
+#count-label,
+#search-box {
   display: inline-block;
   text-align: center;
+}
+#search-box .edit-text {
+  width: calc(100% - 20px);
+  margin: 0 10px;
+}
+.edit-text {
+  padding: 7px;
+  border-radius: 3px;
+  border: 1px solid #8009db;
 }
 #header-section #todo-form {
   width: 49%;
 }
 #header-section #count-label {
-  width: 49%;
+  width: 24.5%;
+}
+#header-section #search-box {
+  width: 24%;
 }
 #header-section.delete-button-visible #todo-form {
   width: 40%;
 }
 #header-section.delete-button-visible #count-label {
-  width: 59%;
+  width: 30%;
+}
+#header-section.delete-button-visible #search-box {
+  width: 30%;
 }
 #new-todo {
   width: calc(100% - 110px);
@@ -158,9 +174,6 @@ input[type="submit"]:disabled {
 .todo-done form .edit-text,
 .todo-item form .edit-text {
   width: calc(100% - 130px);
-  padding: 7px;
-  border-radius: 3px;
-  border: 1px solid #8009db;
 }
 .todo-done form .edit-save,
 .todo-item form .edit-save {
@@ -213,7 +226,9 @@ input[type="submit"]:disabled {
   #header-section #todo-form,
   #header-section.delete-button-visible #todo-form,
   #header-section #count-label,
-  #header-section.delete-button-visible #count-label {
+  #header-section.delete-button-visible #count-label,
+  #header-section #search-box,
+  #header-section.delete-button-visible #search-box {
     display: block;
     width: 100%;
   }
