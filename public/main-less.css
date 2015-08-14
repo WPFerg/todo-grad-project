@@ -146,10 +146,6 @@ input[type="submit"]:disabled {
 #mark-done-box.delete-button-visible button {
   width: calc(20% - 15px);
 }
-.todo-done,
-.todo-item {
-  margin: 1.2em 0;
-}
 .todo-done form,
 .todo-item form {
   width: 80%;
@@ -185,6 +181,29 @@ input[type="submit"]:disabled {
 .todo-done button:disabled,
 .todo-item button:disabled {
   color: black;
+}
+.list {
+  margin: 1.2em 0;
+}
+.list-transitions {
+  width: 100%;
+}
+.list-transitions.ng-enter,
+.list-transitions.ng-leave {
+  transition: all 1s;
+  overflow: hidden;
+  padding: 1.2em 0;
+}
+.list-transitions.ng-enter,
+.list-transitions.ng-leave-active {
+  height: 0;
+  padding: 0;
+}
+.list-transitions.ng-enter-active {
+  height: 1.9em;
+}
+.list-transitions.ng-move {
+  bottom: 1000px;
 }
 @media (max-width: 1100px) {
   .todo-done form,

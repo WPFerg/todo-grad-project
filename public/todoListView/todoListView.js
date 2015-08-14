@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module("todoApp.todoListView", ["ngRoute", "todoApp.todoApi", "todoApp.applyClassOnClick"])
+    angular.module("todoApp.todoListView", ["ngRoute", "ngAnimate", "todoApp.todoApi", "todoApp.applyClassOnClick"])
 
     .config(["$routeProvider", function ($routeProvider) {
         $routeProvider.when("/", {
@@ -42,7 +42,23 @@
         $scope.reloadTodos = function () {
             $scope.isLoading = true;
 
-            $scope.todos = TodoApi.query({}, function() {
+            TodoApi.query({}, function(data) {
+
+                // Remove deleted ones.
+                $scope.todos = $scope.todos.filter(function (todo) {
+                    return $scope.$findElementWithId(todo.id, data);
+                });
+
+                data.forEach(function(potentialTodo) {
+
+                    var existingTodo = $scope.$findElementWithId(potentialTodo.id, $scope.todos);
+                    if (existingTodo) {
+                        existingTodo = potentialTodo;
+                    } else {
+                        $scope.todos.push(potentialTodo);
+                    }
+                });
+
                 $scope.isLoading = false;
                 $scope.$recalculateItemNumbers();
             }, function(error) {
@@ -50,6 +66,16 @@
                     error.statusText;
                 $scope.isLoading = false;
             });
+        };
+
+        $scope.$findElementWithId = function (id, elements) {
+            var elementNeeded;
+            elements.forEach(function(element) {
+                if (element.id === id) {
+                    elementNeeded = element;
+                }
+            });
+            return elementNeeded;
         };
 
         $scope.$recalculateItemNumbers = function() {

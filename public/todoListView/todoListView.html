@@ -39,7 +39,7 @@
         <div id="todo-list-loading-spinner"></div>
         <h2>Loading</h2>
     </div>
-    <div id="todo-list" ng-repeat="todo in todos | filter:appliedFilters">
+    <div class="list list-transitions" id="todo-list" ng-repeat="todo in todos | filter:appliedFilters">
         <div ng-class="{'todo-item': !todo.isCompleted, 'todo-done': todo.isCompleted}">
             <div ng-hide="editingItem === todo" ng-bind="todo.title" ng-click="editMode(todo)"></div>
             <form ng-show="editingItem === todo" ng-submit="finishedEditing(todo)">

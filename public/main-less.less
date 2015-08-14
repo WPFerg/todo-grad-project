@@ -212,7 +212,6 @@ button, input[type="submit"] {
 }
 
 .todo-done, .todo-item {
-    margin: 1.2em 0;
 
     form {
         width: 80%;
@@ -248,6 +247,33 @@ button, input[type="submit"] {
         &:disabled {
             color: black;
         }
+    }
+}
+
+.list {
+    margin: 1.2em 0;
+}
+
+.list-transitions {
+    width: 100%;
+
+    &.ng-enter, &.ng-leave {
+        transition: all 1s;
+        overflow: hidden;
+        padding: 1.2em 0;
+    }
+
+    &.ng-enter, &.ng-leave-active {
+        height: 0;
+        padding: 0;
+    }
+
+    &.ng-enter-active {
+        height: 1.9em;
+    }
+
+    &.ng-move {
+        bottom: 1000px;
     }
 }
 
